@@ -1,0 +1,61 @@
+@import '../src/style/form.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* #EB5D7E */
+/* #FFAD1A */
+/* #995BFC */
+/* #3B3C6A */
+@layer base{
+  h1{
+     @apply text-[#EB5D7E]  px-2 text-5xl font-serif
+  }
+  h2{
+    @apply font-semibold text-5xl p-2 font-mono 
+  }
+  h3{
+    @apply font-semibold text-4xl p-2 font-serif
+  }
+  h4{
+    @apply text-xl p-2 font-semibold
+  }
+  p{
+    @apply p-2 text-xl font-thin
+  }
+}
+@layer components {
+  .btn_solid{
+    @apply btn px-10 py-2 text-xl text-white bg-[#EB5D7E] text-center m-2 rounded-md font-semibold
+    transition-all hover:bg-[#995BFC] focus:bg-[#FFAD1A]
+  }
+
+  .btn_outline{
+    @apply btn px-10 py-2 text-xl text-white bg-[#FFAD1A] text-center m-2 rounded-md font-semibold
+    transition-all hover:bg-[#EB5D7E] focus:bg-[#EB5D7E]
+  }
+
+  .btn_ghost{
+    @apply btn px-10 py-2 text-xl text-center m-2 text-white rounded-md border-[#995BFC]
+ hover:bg-purple-700 focus:bg-[#3B3C6A] font-semibold transition-all
+ }
+}
+
+.serviceCart1{
+@apply m-2 w-[350px] p-2 shadow-md border-l-4 border-[#995BFC] rounded-sm
+}
+.serviceCart2{
+  @apply m-2 w-[350px] p-2 shadow-md border-l-4 border-[#EB5D7E] rounded-sm
+  }
+  .serviceCart3{
+    @apply m-2 w-[350px] p-2 shadow-md border-l-4 border-[#3B3C6A] rounded-sm
+    }
+    .profileDataList{
+      @apply flex gap-3 p-5 bg-[#995BFC] rounded-lg font-semibold font-serif;
+  }
+  .active{
+      @apply rounded-md p-3 bg-gray-500 flex align-baseline gap-5 font-semibold text-xl w-full
+  }
+  .pending{
+      @apply rounded-md p-3 flex align-baseline gap-5 font-semibold text-xl w-full;
+  }
