@@ -3,35 +3,23 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
+import AddTaskModal from '../Modal/AddTaskModal';
 // eslint-disable-next-line react/prop-types
 const CreateATask = ({taskList, setTask}) => {
-    const[newTask,setNewTask]=useState({
-        id:"",
-        title:"",
-        status:"todo"
-    })
-    const HandleSubmit=(e)=>{
+    const [isOpen,setModel]=useState(false)
+    const isClose=()=>{
+        setModel(false)
+    }
+    const HandleCreate=(e)=>{
         e.preventDefault();
-        setTask(prev=>{
-            const list=[...prev,newTask]
-            localStorage.setItem('Tasklist', JSON.stringify(list))
-            toast.success("New Task Create Success")
-            return list
-        })
-       console.log(taskList)
-       setNewTask({
-        id:"",
-        title:"",
-        status:"todo"
-    })
+       setModel(true)
     }
     
     return (
-        <div className="flex-col justify-center items-center">
-          <form className='flex gap-2' onSubmit={(e)=>HandleSubmit(e)}>
-          <input onChange={(e)=>setNewTask({...newTask,id:uuidv4(), title:e.target.value})} type="text"/>
-          <input type='submit' value={"Create Task"} className="btn_solid"/>
-          </form>
+        <div>
+            <AddTaskModal isOpen={isOpen} isClose={isClose}/>
+            <button onClick={HandleCreate} className="btn_solid">Create Task</button>
+
         </div>
     );
 };

@@ -2,9 +2,10 @@
 import { createContext, useContext, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export const ModalContext = createContext();
-const AddTaskModal = ({ isOpen, isClose, isSubmit }) => {
+const AddTaskModal = ({ isOpen, isClose }) => {
   const { handleSubmit, register } = useForm();
   const contentRef = useRef(null);
   const HandleOuterClose = (e) => {
@@ -12,37 +13,50 @@ const AddTaskModal = ({ isOpen, isClose, isSubmit }) => {
       isClose();
     }
   };
-
-  const onSubmit = (data) => {
-    console.log(data);
+  const url="http://localhost:3000/create_task"
+  const notify = (message) => toast(message);
+ 
+  const onSubmit = async(data) => {
+    
+    await fetch(url,{
+      method:"POST",
+      headers:{
+          "Content-type":"application/json"
+      },
+      body:JSON.stringify({...data,status:"todo"})
+  }).then(res=>res.json())
+  .then(async()=>{
+    
+      isClose()
+    notify("Add Successfully Done")
+  })
   };
 
-  const ContextValue = { isClose, isSubmit };
   return createPortal(
-    <ModalContext.Provider value={ContextValue}>
+    <ModalContext.Provider value={isClose}>
       <div>
         <div
           onClick={(e) => HandleOuterClose(e)}
-          className={`fixed inset-0 flex justify-center items-center bg-gray-500/75  
+          className={`fixed inset-0  flex justify-center items-center bg-gray-500/75  
                    ${isOpen ? "visible" : "invisible"}`}
         >
           <div
             ref={contentRef}
-            className="relative text-black bg-white w-full max-w-sm rounded-lg  p-4"
+            className="relative text-black bg-white w-full max-h-screen max-w-md rounded-lg  p-4"
           >
             {/* close Button */}
             <AddTaskModal.Close></AddTaskModal.Close>
 
             {/* Modal Body */}
             <div>
-              <h1 className="text-center font-serif font-extralight p-10">
+              <h1 className="text-center font-serif font-extralight p-2">
                 Create New Task
               </h1>
               <form
-                className="min-w-[720px] p-5 shadow  rounded-md"
+                className=" p-2 shadow  rounded-md "
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="grid grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 gap-5">
                   <div className="w-full my-2">
                     <label className="text-bold block" htmlFor="task_title">
                       Task Title
@@ -82,11 +96,7 @@ const AddTaskModal = ({ isOpen, isClose, isSubmit }) => {
                 </div>
                 <div className="flex justify-center">
                     <AddTaskModal.Submit>
-                    <input
-                    type="submit"
-                    value={"Create"}
-                    className="font-bold text-lg bg-primary text-white p-4 rounded"
-                  ></input>
+                   
                     </AddTaskModal.Submit>
                  
                 </div>
@@ -106,7 +116,7 @@ export default AddTaskModal;
 const CloseButton = ({ children }) => {
   const { isClose } = useContext(ModalContext);
   return (
-    <button onClick={isClose} className="absolute right-1 top-1">
+    <button onClick={isClose} className="absolute right-2 top-3">
       {children ? (
         <span className="text-xl font-semibold">{children}</span>
       ) : (
@@ -129,20 +139,23 @@ const CloseButton = ({ children }) => {
   );
 };
 
-export const SubmitButton = ({ children }) => {
-  const { isSubmit } = useContext(ModalContext);
+export const SubmitButton = () => {
   return (
     <button
-      onClick={isSubmit}
-      className="mt-3 px-10 text-white font-semibold btn bg-primary hover:bg-secondary"
+     
     >
-      {children}
+      {/* {children} */}
+      <input
+                    type="submit"
+                    value={"Create"}
+                    className="font-bold cursor-pointer text-lg btn_solid "
+                  ></input>
     </button>
   );
 };
 export const ModalHeader = ({ children }) => {
   return (
-    <div className="text-center font-serif font-semibold text-2xl pb-5 pt-5">
+    <div className="text-center font-serif font-semibold text-2xl pt-5">
       {children}
     </div>
   );

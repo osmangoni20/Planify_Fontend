@@ -10,8 +10,10 @@ const Dashboard = () => {
     const [task,setTask]=useState([])
 
     useEffect(()=>{
-        setTask(JSON.parse(localStorage.getItem('Tasklist')))
+        fetch("http://localhost:3000/task").then(res=>res.json())
+        .then(data=>setTask(data))
     },[])
+    console.log(task)
     return (
     
         <div className="">
@@ -24,7 +26,7 @@ const Dashboard = () => {
             
             
             <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/> <br/>
-            <div>
+            {/* <div>
                 <h3 className="mb-2 text-center border-b-2 border-b-[#EB5D7E]">New Task</h3>
                 {
                     todoData.map(data=><SingleTask key={data._id} task={data}></SingleTask>)
@@ -42,7 +44,7 @@ const Dashboard = () => {
             {
                     compleatData.map(data=><SingleTask key={data._id} task={data}></SingleTask>)
             }
-            </div>
+            </div> */}
         </div>
     );
 };

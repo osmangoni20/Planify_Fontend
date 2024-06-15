@@ -34,7 +34,7 @@ const route = createBrowserRouter([
         element:<DashboardLayout/>,
         children:[
             {
-                path:"home",
+                index:true,
                 element:<Dashboard/>
             },
             {

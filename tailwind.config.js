@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -10,5 +11,6 @@ export default {
   plugins: [
     // eslint-disable-next-line no-undef
     require('daisyui'),
+    require('@tailwindcss/forms'),
   ],
 }
